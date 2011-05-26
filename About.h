@@ -9,14 +9,21 @@
 class About
 {
     public:
-        About();
+        About(std::string name, std::string version="", std::string copyright="", std::string license="");
     private:
-        std::string program_name;
-        std::string program_description;
+        std::string name;
+        std::string description;
         std::string version;
         std::string copyright;
         std::string license;
     public:
+        //set methods
+        void set_name(std::string name);
+        void set_description(std::string description);
+        void set_version(std::string version);
+        void set_copyright(std::string copyright);
+        void set_license(std::string license);
+
         std::string get_about() const;
         friend std::ostream& operator<<(std::ostream& os, const About& a);
 };
