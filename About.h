@@ -6,16 +6,38 @@
 
 #include <string>
 
+/*"About" information is divided into different levels:
+    L0 = standard text, pre-defined and not changeable
+    L1 = basic information, only set by user
+    L2 = advanced information, can be generated automatically by L0/L1 information but can be also set manually by user
+    L3 = advanced information, generated automatically by L0/L1/L2 information
+
+  * = information that must be set by user to get a proper result
+*/
+
 class About
 {
+    private:
+        //static members: "standard text"
+        //copyright: <pre_copyright_1><copyright_year><pre_copyright_2><copyright_author>
+        static const std::string pre_copyright_1;
+        static const std::string pre_copyright_2;
+
     public:
         About(std::string name, std::string version="", std::string copyright="", std::string license="");
-    private:
-        std::string name;
-        std::string description;
-        std::string version;
-        std::string copyright;
-        std::string license;
+    public:
+        //"About" information
+        std::string name; //L1*
+        std::string author; //L1
+        std::string version; //L1
+        std::string date; //L1
+        std::string description; //L1
+        std::string copyright_year; //L2
+        std::string copyright_author; //L2
+        std::string copyright; //L2
+        std::string license; //L2
+
+        std::string about; //L3 resulting "About" text
     public:
         //set methods
         void set_name(std::string name);
@@ -23,6 +45,9 @@ class About
         void set_version(std::string version);
         void set_copyright(std::string copyright);
         void set_license(std::string license);
+
+        void generate(bool f = false); //generate L2/L3 information that are not yet set (or overwrites them if 'f==true')
+        void update(); //generate 'about' by flicking given information together
 
         std::string get_about() const;
         friend std::ostream& operator<<(std::ostream& os, const About& a);

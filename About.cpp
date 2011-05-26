@@ -6,6 +6,9 @@
 
 using namespace std;
 
+const string About::pre_copyright_1 = "Copyright (C)";
+const string About::pre_copyright_2 = " by ";
+
 About::About(string name, string version, string copyright, string license) : name(name), version(version), copyright(copyright), license(license)
 {
 
@@ -32,9 +35,27 @@ void About::set_license(string license)
     this->license = license;
 }
 
-string About::get_about() const
+void About::generate(bool f)
+{
+    //L2
+    if (f || copyright_year.empty())
+        copyright_year = date;
+    if (f || copyright_author.empty())
+        copyright_author = author;
+    if (f || copyright.empty())
+    {
+        copyright = pre_copyright_1;//+ copyright_year + pre_copyright_2 + copyright_author;
+        if (!copyright_year.empty())
+            copyright += " " + copyright_year;
+        if (!copyright_author.empty())
+            copyright += pre_copyright_2 + copyright_author;
+    }
+}
+
+void About::update()
 {
     ostringstream os;
+
     if (!name.empty())
     {
         os << name;
@@ -48,11 +69,16 @@ string About::get_about() const
     if (!license.empty())
         os << "\n" << license;
 
-    return os.str();
+    about = os.str();
+}
+
+string About::get_about() const
+{
+    return about;
 }
 
 ostream& operator<<(ostream& os, const About& a)
 {
-    os << a.get_about();
+    os << a.about;
     return os;
 }
