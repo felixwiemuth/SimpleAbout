@@ -17,14 +17,23 @@
 
 class About
 {
+    public:
+        enum License
+        {
+            LICENSE_GPL,
+            LICENSE_ALL_RIGHTS_RESERVED
+        };
+
     private:
         //static members: "standard text"
         //copyright: <pre_copyright_1><copyright_year><pre_copyright_2><copyright_author>
         static const std::string pre_copyright_1;
         static const std::string pre_copyright_2;
+        static const std::string licenses[];
 
     public:
-        About(std::string name, std::string version="", std::string copyright="", std::string license="");
+        About();
+        About(std::string name, std::string version="", std::string author="", std::string copyright_year="");
     public:
         //"About" information
         std::string name; //L1*
@@ -45,6 +54,7 @@ class About
         void set_version(std::string version);
         void set_copyright(std::string copyright);
         void set_license(std::string license);
+        void set_license(License license);
 
         void generate(bool f = false); //generate L2/L3 information that are not yet set (or overwrites them if 'f==true')
         void update(); //generate 'about' by flicking given information together

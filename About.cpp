@@ -8,10 +8,18 @@ using namespace std;
 
 const string About::pre_copyright_1 = "Copyright (C)";
 const string About::pre_copyright_2 = " by ";
+const string About::licenses[] = {  "Licensed under the GNU GENERAL PUBLIC LICENSE http://www.gnu.org/licenses/gpl.txt",
+                                    "All rights reserved."  };
 
-About::About(string name, string version, string copyright, string license) : name(name), version(version), copyright(copyright), license(license)
+About::About()
 {
 
+}
+
+About::About(string name, string version, string author, string copyright_year) : name(name), version(version), author(author), copyright_year(copyright_year)
+{
+    generate();
+    update();
 }
 
 void About::set_name(string name)
@@ -33,6 +41,11 @@ void About::set_copyright(string copyright)
 void About::set_license(string license)
 {
     this->license = license;
+}
+
+void About::set_license(License license)
+{
+    this->license = licenses[license];
 }
 
 void About::generate(bool f)
