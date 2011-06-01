@@ -21,19 +21,21 @@ class About
         enum License
         {
             LICENSE_GPL,
-            LICENSE_ALL_RIGHTS_RESERVED
+            LICENSE_ALL_RIGHTS_RESERVED,
+            LICENSE_NONE
         };
 
     private:
-        //static members: "standard text"
+        //*** static members: "standard text" that is used to generate "About" text ***
         //copyright: <pre_copyright_1><copyright_year><pre_copyright_2><copyright_author>
         static const std::string pre_copyright_1;
         static const std::string pre_copyright_2;
+        //license: array with texts for pre-defined licenses, index defined by enum 'License': string for license "X" is 'linceses[LICENSE_X]'
         static const std::string licenses[];
 
     public:
         About();
-        About(std::string name, std::string version="", std::string author="", std::string copyright_year="");
+        About(std::string name, std::string version="", std::string author="", std::string copyright_year="", License license=LICENSE_NONE); //set most common information and call 'generate()' and 'update()'
     public:
         //"About" information
         std::string name; //L1*
@@ -59,8 +61,10 @@ class About
         void generate(bool f = false); //generate L2/L3 information that are not yet set (or overwrites them if 'f==true')
         void update(); //generate 'about' by flicking given information together
 
+        //get methods
         std::string get_about() const;
-        friend std::ostream& operator<<(std::ostream& os, const About& a);
+
+        friend std::ostream& operator<<(std::ostream& os, const About& a); //add "About" text to 'os'
 };
 
 
